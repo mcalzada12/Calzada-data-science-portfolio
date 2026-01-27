@@ -3,4 +3,11 @@ This repository is my main Data Science Portfolio. It will be used to organize a
 
 ## 📂 Planned Structure for Future Projects
 
+## 🛠️ Tools I Plan to Use
+
+- Python (pandas, NumPy, matplotlib, seaborn)
+- Jupyter Notebook
+- Excel
+- Power BI / Tableau
+- Git & GitHub
 
