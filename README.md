@@ -29,7 +29,5 @@ LASTNAME-Data-Science-Portfolio/
 
 - Python (pandas, NumPy, matplotlib, seaborn)
 - Jupyter Notebook
-- Excel
-- Power BI / Tableau
 - Git & GitHub
 
