@@ -3,3 +3,4 @@ import numpy as np
 print(f"numpy: {np.__version__}")
 print(f"pandas: {pd.__version__}")
 
+pip install streamlit
