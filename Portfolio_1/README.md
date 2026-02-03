@@ -4,8 +4,8 @@ This app has a primary intention: Help people understand how diffrente behaviour
 ### Knowing Whoop 
 A Whoop is a wearable fitness and health tracker designed to measure your body’s recovery, strain, and sleep. Instead of showing data on the device, it collects continuous biometric information—like heart rate, HRV, sleep stages, and activity load—and sends it to the WHOOP app. It’s mainly used by athletes or people who want deeper insights into performance, recovery, and overall wellness.
 
-## Primary Focus of the App 💡
 
+## Primary Focus of the App 💡
 This app plans to showcase in the easiest way possible how differente habits affect your recovery, sleep and overall phyisical wellbeing. 
 
 ### Knowing yourself and works for you 🔋
