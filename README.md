@@ -4,10 +4,9 @@ This repository is my main Data Science Portfolio. It will be used to organize a
 
 ## Structure of the Projects
 As I add more work, this repository will be organized into folders:
-- [Vizualizations](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Vizualizations)
-- [Modeling](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Modeling)
-- [EDA](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/EDA)
-
+- [Portfolio_1](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolio_1)
+- Portfolio 2
+- Portfolio 3 
 
 
 
