@@ -1,6 +1,3 @@
-# Perfect! Here’s a slightly longer, **concise but informative version**—enough to give context without being overwhelming:
-
----
 
 # 🌍 Global Happiness Insights App
 
