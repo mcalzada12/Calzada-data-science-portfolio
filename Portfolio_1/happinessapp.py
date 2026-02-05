@@ -1,6 +1,8 @@
 import streamlit as st 
 import pandas as pd 
 import altair as alt
+import plotly.express as px
+
 
 st.title ("Welcome to the World Happiness Report 2019 Data Review App")
 st.write ("This is a data review of the diffrente countrie's happines indicators and characteristics which position it /" \
@@ -46,6 +48,24 @@ with st.container(horizontal=True):
 
 df= pd.read_csv("DATA/2019.csv")
 st.write("Here's our data")
+
+
+
+# Load your data (replace with your actual data source)
+data = pd.DataFrame(df)
+
+country_filter = st.multiselect('Select Country', options=list(data['Country or region'].unique()))
+graph_y = st.multiselect('Select Category to observe', options=list(data.columns))
+
+filtered_data = data[data['Country or region'].isin(country_filter)]
+
+st.write(filtered_data)
+
+fig = px.bar(filtered_data, x='Country or region', y=graph_y, color='Country or region')
+st.plotly_chart(fig)   
+st.subheader("Data Visualization - Happiness Score by Country")
+
+
 
 st.write("Data Summary")
 st.write(df.describe())
