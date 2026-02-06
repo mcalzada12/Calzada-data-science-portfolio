@@ -1,4 +1,9 @@
 import streamlit as st 
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+
 st .title("Hello , Streamlit! ")
 st.markdown("# Hello, streamlit!")
 st.write ("This is my first streamlit app. ")
@@ -26,6 +31,21 @@ st.dataframe(filtered_df)
 
 #add bar chart 
 st.bar_chart(df["Salary"])
+
+box_plot1 = sns.boxplot( x=df["City"], y=df["Salary"])
+st.pyplot(box_plot1.get_figure())
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
