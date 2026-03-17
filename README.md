@@ -4,9 +4,10 @@ This repository is my main Data Science Portfolio. It will be used to organize a
 
 ## Structure of the Projects
 As I add more work, this repository will be organized into folders:
-- [Portfolio_1](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolio_1)
-- Portfolio 2
-- Portfolio 3 
+- [In class Work] 
+- Portfolios 
+- Personal Porjects
+
 
 
 
