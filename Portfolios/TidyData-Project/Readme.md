@@ -73,7 +73,10 @@ conda install pandas matplotlib jupyter python
 ```
 
 ### 4. Launch Jupyter Notebook
-`Jupyter notebook` 
+```
+Jupyter notebook
+```
+ 
 This will open a browser window 
 
 ### 5. Open and Run the Notebook
