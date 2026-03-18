@@ -56,6 +56,7 @@ After these steps, the dataset was in tidy format and ready for exploratory anal
 ### 1. Clone or download the repository
 
 git clone <https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/TidyData-Project/Tidy_Data-project.ipynb>
+
 cd <https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project>
 
 
