@@ -76,6 +76,7 @@ conda install pandas matplotlib jupyter python
 ```
 Jupyter notebook
 ```
+
  
 This will open a browser window 
 
