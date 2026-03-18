@@ -54,10 +54,10 @@ After these steps, the dataset was in tidy format and ready for exploratory anal
 
 
 ### 1. Clone or download the repository
-
+```
 git clone <https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/TidyData-Project/Tidy_Data-project.ipynb>
-
 cd <https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project>
+```
 
 
 ### 2. Set up a python environmnet 
@@ -76,9 +76,8 @@ conda install pandas matplotlib jupyter python
 This will open a browser window 
 
 ### 5. Open and Run the Notebook
-Open the file: olympics_08_tidy_analysis.ipynb
-
-Click "Run All" or run cells one by one from top to bottom
+- Open the file: olympics_08_tidy_analysis.ipynb
+- Click "Run All" or run cells one by one from top to bottom
 
 
 
