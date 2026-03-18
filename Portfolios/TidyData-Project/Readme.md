@@ -61,12 +61,24 @@ cd <https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portf
 
 
 ### 2. Set up a python environmnet 
-``` conda create -n olympics_env python=3.10 
-conda activate olympics_env ```
-
-
-
+```
+conda create -n olympics_env python=3.10 
+conda activate olympics_env 
+```
 ### 3. Install Libraries 
+```
+conda install pandas matplotlib jupyter python 
+
+```
+
+### 4. Launch Jupyter Notebook
+`Jupyter notebook` 
+This will open a browser window 
+
+### 5. Open and Run the Notebook
+Open the file: olympics_08_tidy_analysis.ipynb
+
+Click "Run All" or run cells one by one from top to bottom
 
 
 
