@@ -61,5 +61,9 @@ cd <https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portf
 
 
 ### 2. Set up a python environmnet 
-'conda create -n olympics_env python=3.10
-conda activate olympics_env' 
+> `conda create -n olympics_env python=3.10`
+> `conda activate olympics_env`
+
+
+
+
