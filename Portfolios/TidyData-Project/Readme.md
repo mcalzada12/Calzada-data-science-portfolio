@@ -15,7 +15,7 @@ Once the data follows this format, it becomes much easier to summarize, compare,
 
 ---
 
-## What this notebook does
+## 📘 What this notebook does
 
 - reshaped the dataset from wide to long format using `melt()`
 - removed missing values
@@ -30,7 +30,7 @@ The main purpose was not only to clean the data, but also to show why tidy data 
 ---
 
 ## Dataset Description
-This dataset contains information on medalists from the 2008 Olympic Games. It was provided as part of the assignment and included athlete names along with medal outcomes stored across multiple columns. It has a total of 1875 athletes and medals to analyize from. 
+> This dataset contains information on medalists from the 2008 Olympic Games. It was provided as part of the assignment and included athlete names along with medal outcomes stored across multiple columns. It has a total of 1875 athletes and medals to analyize from. 
 
 ### Pre-processing steps
 The main pre-processing steps were:
