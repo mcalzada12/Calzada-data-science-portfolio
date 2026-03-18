@@ -4,7 +4,6 @@
 
 This project focuse in trsnforming a raw data set of 2008 olympic medalists into a tidy format and performing exploratory analysis (EDA). the Main objective is to apply tidy data principles to restructure the data set and generate meaningful insight through visualizations and aggregation. 
 
-
 But what exactly is data cleaning and the concept of "Tidy Data"? 
 
 Tidy data helps the data have a clear sturcture to work with: 
