@@ -13,7 +13,7 @@ As I add more work, this repository will be organized into folders:
 
 HAPPINESS PORTFOLIO
 
-! [Happiness App](9https://www.visualcapitalist.com/wp-content/uploads/2024/03/OC-World-Happiness-Report-2024_Mar19.jpg)
+![Happiness App](9https://www.visualcapitalist.com/wp-content/uploads/2024/03/OC-World-Happiness-Report-2024_Mar19.jpg)
 
 
 
