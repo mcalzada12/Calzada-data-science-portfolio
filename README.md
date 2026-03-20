@@ -14,7 +14,7 @@ As I add more work, this repository will be organized into folders:
 HAPPINESS PORTFOLIO
 
 
-![the olympics logo]((https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00))!
+![the olympics logo]((https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00))
 
 
 
