@@ -52,7 +52,7 @@ Regression:
 <table>
   <tr>
     <td width="27%">
-      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" width="70%">
+      <img src="/Users/mirandacalzada/Documents/GitHub/Calzada-data-science-portfolio/Portfolios/Portfolio_3/Images/Screenshot 2026-04-09 at 18.07.13.png" width="70%">
     </td>
     <td width="55%" valign="top">
 
