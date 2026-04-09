@@ -47,12 +47,15 @@ Regression:
 ---
 ## Visuals from the Application   
 
+## Visuals from the Application
+
+
 
 ---
 <table>
   <tr>
     <td width="27%">
-      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" width="70%">
+      <img src=" width="70%">
     </td>
     <td width="55%" valign="top">
 
