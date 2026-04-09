@@ -46,18 +46,12 @@ Regression:
 
 ---
 ## Visuals from the Application   
-
-## Visuals from the Application
-
-
-
 ---
-<table>
-  <tr>
-    <td width="27%">
-      <img src=" width="70%">
-    </td>
-    <td width="55%" valign="top">
+<tr>
+  <td width="40%">
+    <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/app_screenshot.png" alt="Regression Results " width="80%">
+  </td>
+  <td width="50%" valign="top">
 
 [Machine Learning Models ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
 
