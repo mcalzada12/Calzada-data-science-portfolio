@@ -52,5 +52,21 @@ The project focuses on the idea of tidy data preparation, and the process requir
 
   </td>
   </tr>
+  <tr>
+  <td width="40%">
+    <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00" alt="Olympic Medalists" width="80%">
+  </td>
+  <td width="50%" valign="top">
+
+[Machine learning Model ](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/Portfolio_3)
+
+This machine learning project, is an application focused on the ability of the app to receive doffrente data sets and anaylize and process them through diffrent machine learning models, these might be classifiers or regression models. The application has also the diffrent settings depending on the model selected on which different hyperparameters can be tuned to optimize the model's ability to predict the target variable. 
+
+
+
+**Tools & Technologies:** Python, Pandas, Jupyter, sklearn, Applied Tidy Data Principles
+
+  </td>
+  </tr>
 </table>
 
