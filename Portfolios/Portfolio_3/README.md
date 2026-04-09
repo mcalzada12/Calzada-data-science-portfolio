@@ -47,6 +47,9 @@ Regression:
 ---
 ## Visuals from the Application   
 
+## Visuals from the Application
+
+![Training Results](images/app_screenshot.png)
 
 ---
 <table>
