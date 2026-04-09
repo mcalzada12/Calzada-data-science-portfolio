@@ -11,8 +11,6 @@ This project is designed to make machine learning more understandable by combini
 ---
 
 ## Deployed App
-
-
 ---
 
 ## Required Libraries and Versions
