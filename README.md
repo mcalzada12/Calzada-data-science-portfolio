@@ -16,9 +16,6 @@ As I add more work, this repository will be organized into folders:
 - Git & GitHub
 
 # My Portfolios
-## My projects  
-
-
 ---
 <table>
   <tr>
