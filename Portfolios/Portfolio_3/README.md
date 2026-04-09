@@ -44,23 +44,6 @@ Regression:
 - Decision Trees: max_depth, min_samples_split  
 - KNN: n_neighbors, weights  
 
-### Model Evaluation
-
-Classification:
-- Accuracy  
-- Precision  
-- Recall  
-- F1 Score  
-- Confusion Matrix  
-- ROC Curve  
-
-Regression:
-- R²  
-- MAE  
-- MSE  
-- RMSE  
-- Predicted vs Actual plot  
-
 ---
 
 ## References
