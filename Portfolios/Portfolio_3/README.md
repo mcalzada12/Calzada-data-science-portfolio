@@ -11,6 +11,7 @@ This project is designed to make machine learning more understandable by combini
 ---
 
 ## Deployed App
+
 ---
 
 ## Required Libraries and Versions
@@ -45,25 +46,24 @@ Regression:
 - KNN: n_neighbors, weights  
 
 ---
-## Visuals from the Application   
-
 ## Visuals from the Application
-
-
-
 ---
+
 <table>
   <tr>
     <td width="27%">
-      <img src=" width="70%">
+      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/app_screenshot.png" alt="Results for regression model " width="70%">
     </td>
     <td width="55%" valign="top">
 
-[Machine Learning Models ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+[Machine learning model ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
 
-This Streamlit project explores diffrente data sets through machine learning models, which coould be clssification or regression options, that can vary dependding on the target variable that wants to be predicted. The App aoffers several tabs which each one offers diffrente insight into what the model has achivied. The app also supports for users to upload their own files for machine learning models to be trained on. 
+This Streamlit application explores different datasets using supervised machine learning models. Users can choose between classification and regression depending on the target variable and experiment with different models and hyperparameters.
 
-**Tools & Technologies:** Python, Pandas, Streamlit, Matplotlib, Seaborn
+The app provides multiple tabs that guide the user through data exploration, training results, evaluation, and model comparison. It also allows users to upload their own datasets for a fully interactive experience.
+
+**Tools & Technologies:**  
+Python · Pandas · Streamlit · Matplotlib · Seaborn
 
 <tr>
   <td width="40%">
@@ -71,7 +71,9 @@ This Streamlit project explores diffrente data sets through machine learning mod
   </td>
   <td width="50%" valign="top">
 
-[Olympic Medalists Data Analysis](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project)
+[Classification Visuals and reuslts ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+
+
 
 In this Jupyter Notebook, I worked with the 2008 Olympic dataset to clean, structure, and analyze medalist data.  
 I applied tidy data principles to prepare the dataset, and created visualizations to compare medal distribution across countries, sports, and gender.  
@@ -83,6 +85,7 @@ The project focuses on the idea of tidy data preparation, and the process requir
   </td>
   </tr>
 </table>
+
 
 
 
