@@ -56,7 +56,7 @@ Regression:
     </td>
     <td width="55%" valign="top">
 
-[Machine learning model ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+[Example of Regression Results  ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
 
 This Streamlit application explores different datasets using supervised machine learning models. Users can choose between classification and regression depending on the target variable and experiment with different models and hyperparameters.
 
@@ -67,11 +67,11 @@ Python · Pandas · Streamlit · Matplotlib · Seaborn
 
 <tr>
   <td width="40%">
-    <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00" alt="Olympic Medalists" width="80%">
+    <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/confusion_matrix.png" alt="Classification Results " width="80%">
   </td>
   <td width="50%" valign="top">
 
-[Classification Visuals and reuslts ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+[Example of Classification Visuals and reuslts ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
 
 
 
