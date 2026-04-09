@@ -1,6 +1,6 @@
-# Supervised Machine Learning Explorer
+# 📊 Supervised Machine Learning Explorer
 
-## Project Overview
+## 🚀 Project Overview
 
 The goal of this project is to build an interactive Streamlit application that allows users to explore supervised machine learning in a practical and intuitive way. 
 
@@ -10,52 +10,22 @@ This project is designed to make machine learning more understandable by combini
 
 ---
 
-## How to Run the App Locally
-
-### 1. Clone the repository
-
-git clone https://github.com/your-username/your-repo-name.git  
-cd your-repo-name/Portfolios/portfolio_3
-
-### 2. Create a virtual environment (recommended)
-
-python -m venv venv
-
-### 3. Activate the virtual environment
-
-Mac / Linux:  
-source venv/bin/activate  
-
-Windows:  
-venv\Scripts\activate  
-
-### 4. Install the required libraries
-
-pip install -r requirements.txt
-
-### 5. Run the Streamlit app
-
-streamlit run MLSStreamlitApp.py
-
-### 6. Open the app
-
-http://localhost:8501
 
 ---
 
 ## Deployed App
 
-https://your-app-link.streamlit.app
 
 ---
 
 ## Required Libraries and Versions
 
-streamlit==1.32.0  
-pandas==2.2.1  
-numpy==1.26.4  
-matplotlib==3.8.2  
-scikit-learn==1.4.1  
+streamlit
+pandas
+numpy
+matplotlib  
+scikit-learn  
+
 
 ---
 
