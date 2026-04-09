@@ -52,7 +52,7 @@ Regression:
 <table>
   <tr>
     <td width="27%">
-      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" alt= "Training Results for Regression Models " width="70%">
+      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" width="70%">
     </td>
     <td width="55%" valign="top">
 
