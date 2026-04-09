@@ -58,6 +58,9 @@ Regression:
 This Streamlit project explores diffrente data sets through machine learning models, which coould be clssification or regression options, that can vary dependding on the target variable that wants to be predicted. The App aoffers several tabs which each one offers diffrente insight into what the model has achivied. The app also supports for users to upload their own files for machine learning models to be trained on. 
 
 **Tools & Technologies:** Python, Pandas, Streamlit, Matplotlib, Seaborn
+  </td>
+  </tr>
+</table>
 
 <tr>
   <td width="40%">
