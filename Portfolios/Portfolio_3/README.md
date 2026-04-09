@@ -51,15 +51,12 @@ Regression:
 
 <table>
   <tr>
-    <!-- IMAGE -->
-    <td width="40%" align="center">
-      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/app_screenshot.png?raw=true" width="90%" style="border-radius:10px;">
+    <td width="27%">
+      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/app_screenshot.png" alt="Results for regression model " width="70%">
     </td>
+    <td width="55%" valign="top">
 
-    <!-- TEXT -->
-    <td width="60%" valign="top">
-
-### 🔍 [Machine Learning Models](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+[Machine learning model ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
 
 This Streamlit application explores different datasets using supervised machine learning models. Users can choose between classification and regression depending on the target variable and experiment with different models and hyperparameters.
 
@@ -68,28 +65,22 @@ The app provides multiple tabs that guide the user through data exploration, tra
 **Tools & Technologies:**  
 Python · Pandas · Streamlit · Matplotlib · Seaborn
 
-    </td>
-  </tr>
+<tr>
+  <td width="40%">
+    <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00" alt="Olympic Medalists" width="80%">
+  </td>
+  <td width="50%" valign="top">
 
-  <tr>
-    <!-- IMAGE -->
-    <td width="40%" align="center">
-      <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00" width="90%" style="border-radius:10px;">
-    </td>
+[Olympic Medalists Data Analysis](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project)
 
-    <!-- TEXT -->
-    <td width="60%" valign="top">
+In this Jupyter Notebook, I worked with the 2008 Olympic dataset to clean, structure, and analyze medalist data.  
+I applied tidy data principles to prepare the dataset, and created visualizations to compare medal distribution across countries, sports, and gender.  
+The project focuses on the idea of tidy data preparation, and the process required to arrange dat aina way which is easier to manipulate and later on display. 
 
-### 🏅 [Olympic Medalists Data Analysis](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project)
 
-In this Jupyter Notebook, I analyzed the 2008 Olympic dataset by applying tidy data principles to clean and structure the data. The project focuses on transforming raw data into a usable format and generating insights through visualization.
+**Tools & Technologies:** Python, Pandas, Jupyter, sklearn, Applied Tidy Data Principles
 
-The analysis compares medal distribution across countries, sports, and gender, highlighting patterns and trends in the dataset.
-
-**Tools & Technologies:**  
-Python · Pandas · Jupyter Notebook · scikit-learn · Tidy Data Principles
-
-    </td>
+  </td>
   </tr>
 </table>
 
