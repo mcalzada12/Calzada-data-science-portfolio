@@ -52,8 +52,7 @@ Regression:
 <table>
   <tr>
     <td width="27%">
-      <img src="<img width="2182" height="966" alt="image" src="https://github.com/user-attachments/assets/376a1a14-c8ad-4b01-9f94-57f16f13fc15" />
-" alt="Training Results for Rgeression Models " width="70%">
+      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" alt= "Training Results for Regression Models " width="70%">
     </td>
     <td width="55%" valign="top">
 
