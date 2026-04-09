@@ -1,6 +1,6 @@
-# Supervised Machine Learning Explorer
+# 📊 Supervised Machine Learning Explorer
 
-## Project Overview
+## 🚀 Project Overview
 
 The goal of this project is to build an interactive Streamlit application that allows users to explore supervised machine learning in a practical and intuitive way. 
 
@@ -10,52 +10,17 @@ This project is designed to make machine learning more understandable by combini
 
 ---
 
-## How to Run the App Locally
-
-### 1. Clone the repository
-
-git clone https://github.com/your-username/your-repo-name.git  
-cd your-repo-name/Portfolios/portfolio_3
-
-### 2. Create a virtual environment (recommended)
-
-python -m venv venv
-
-### 3. Activate the virtual environment
-
-Mac / Linux:  
-source venv/bin/activate  
-
-Windows:  
-venv\Scripts\activate  
-
-### 4. Install the required libraries
-
-pip install -r requirements.txt
-
-### 5. Run the Streamlit app
-
-streamlit run MLSStreamlitApp.py
-
-### 6. Open the app
-
-http://localhost:8501
-
----
-
 ## Deployed App
-
-https://your-app-link.streamlit.app
-
 ---
 
 ## Required Libraries and Versions
 
-streamlit==1.32.0  
-pandas==2.2.1  
-numpy==1.26.4  
-matplotlib==3.8.2  
-scikit-learn==1.4.1  
+streamlit
+pandas
+numpy
+matplotlib  
+scikit-learn  
+
 
 ---
 
@@ -79,24 +44,44 @@ Regression:
 - Decision Trees: max_depth, min_samples_split  
 - KNN: n_neighbors, weights  
 
-### Model Evaluation
+---
+## Visuals from the Application   
 
-Classification:
-- Accuracy  
-- Precision  
-- Recall  
-- F1 Score  
-- Confusion Matrix  
-- ROC Curve  
-
-Regression:
-- R²  
-- MAE  
-- MSE  
-- RMSE  
-- Predicted vs Actual plot  
 
 ---
+<table>
+  <tr>
+    <td width="27%">
+      <img src="file:///Users/mirandacalzada/Desktop/Screenshot%202026-04-09%20at%2018.07.13.png" width="70%">
+    </td>
+    <td width="55%" valign="top">
+
+[Machine Learning Models ](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/MLSStreamlitApp.py)
+
+This Streamlit project explores diffrente data sets through machine learning models, which coould be clssification or regression options, that can vary dependding on the target variable that wants to be predicted. The App aoffers several tabs which each one offers diffrente insight into what the model has achivied. The app also supports for users to upload their own files for machine learning models to be trained on. 
+
+**Tools & Technologies:** Python, Pandas, Streamlit, Matplotlib, Seaborn
+
+<tr>
+  <td width="40%">
+    <img src="https://res.cloudinary.com/aenetworks/image/upload/c_fill,ar_2,w_3840,h_1920,g_auto/dpr_auto/f_auto/q_auto:eco/v1/gettyimages-466313493-2?_a=BAVAZGB00" alt="Olympic Medalists" width="80%">
+  </td>
+  <td width="50%" valign="top">
+
+[Olympic Medalists Data Analysis](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/TidyData-Project)
+
+In this Jupyter Notebook, I worked with the 2008 Olympic dataset to clean, structure, and analyze medalist data.  
+I applied tidy data principles to prepare the dataset, and created visualizations to compare medal distribution across countries, sports, and gender.  
+The project focuses on the idea of tidy data preparation, and the process required to arrange dat aina way which is easier to manipulate and later on display. 
+
+
+**Tools & Technologies:** Python, Pandas, Jupyter, sklearn, Applied Tidy Data Principles
+
+  </td>
+  </tr>
+</table>
+
+
 
 ## References
 
