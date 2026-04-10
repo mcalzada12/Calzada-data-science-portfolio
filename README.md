@@ -57,7 +57,7 @@ The project focuses on the idea of tidy data preparation, and the process requir
 
 [Machine learning Model ](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/Portfolio_3)
 
-This machine learning project, is an application focused on the ability of the app to receive doffrente data sets and anaylize and process them through diffrent machine learning models, these might be classifiers or regression models. The application has also the diffrent settings depending on the model selected on which different hyperparameters can be tuned to optimize the model's ability to predict the target variable. 
+This machine learning project, is an application created using streamlit, focused on the ability of the app to receive diffrent data sets and anaylize and process them through diffrent machine learning models, these might be classifiers or regression models. The application has also diffrent settings depending on the model selected  which different hyperparameters can be tuned to optimize the model's ability to predict the target variable. 
 
 
 
