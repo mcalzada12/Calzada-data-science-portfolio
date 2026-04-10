@@ -118,8 +118,7 @@ def compare_classification_models(X_train, X_test, y_train, y_test, random_state
 
     results = []
 # for classification models we use accuracy, precision, recall, and F1 score to give a well-rounded view of performance, 
-# especially for imbalanced datasets. For regression models we use R², MAE, MSE, and RMSE to capture different 
-# aspects of prediction error and model fit.
+# especially for imbalanced datasets.
 
     for name, model in models.items():
         model.fit(X_train, y_train)
@@ -287,7 +286,7 @@ if df is not None:
 
 
     tab1, tab2, tab3, tab4 = st.tabs(
-        ["Data Overview", "Training Results", "Evaluation", "Comparison"]
+        ["Data Overview", "Training Results", "Evaluation and Visuals", "Comparison"]
     )
 
     with tab1:
