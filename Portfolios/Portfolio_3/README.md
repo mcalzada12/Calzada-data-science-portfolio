@@ -17,13 +17,19 @@ This project is designed to make machine learning more understandable by combini
 ## Required Libraries and Versions
 
 streamlit
+
+
 pandas
+
+
 numpy
-matplotlib  
+
+
+matplotlib 
+
+
 scikit-learn  
 
-
----
 
 ## App Features
 
