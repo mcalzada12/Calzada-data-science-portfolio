@@ -212,10 +212,10 @@ elif dataset_option == "Upload CSV File":
 
 
 if df is not None:
-    st.sidebar.header("2. Select Target Variable")
+    st.sidebar.header("2. Select Target Variable 🎯")
     target_column = st.sidebar.selectbox("Choose the target column:", df.columns)
 
-    st.sidebar.header("3. Select Task Type")
+    st.sidebar.header("3. Select Task Type 📋")
     task_type = st.sidebar.radio(
         "Choose supervised learning task:",
         ["Classification", "Regression"]
@@ -249,7 +249,7 @@ if df is not None:
         step=1
     )
 
-    st.sidebar.header("5. Choose Model")
+    st.sidebar.header("5. Choose Model 🤖")
 
     if task_type == "Classification":
         model_name = st.sidebar.selectbox(
@@ -262,7 +262,7 @@ if df is not None:
             ["Linear Regression", "Decision Tree Regressor", "KNN Regressor", 'Random Forest Regressor']
         )
 
-    st.sidebar.header("6. Hyperparameters")
+    st.sidebar.header("6. Hyperparameters ⚙️")
 
     if model_name == "Logistic Regression":
         C = st.sidebar.slider("Regularization strength (C)", 0.01, 10.0, 1.0)
