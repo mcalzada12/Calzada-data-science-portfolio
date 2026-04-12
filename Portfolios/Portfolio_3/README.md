@@ -12,18 +12,16 @@ This project is designed to make machine learning more understandable by combini
 
 ## Deployed App
 
----
+
 
 ## Required Libraries and Versions
 
-streamlit
-pandas
-numpy
-matplotlib  
-scikit-learn  
+- streamlit
+- pandas
+- numpy
+- matplotlib
+- scikit-learn  
 
-
----
 
 ## App Features
 
@@ -39,13 +37,7 @@ Regression:
 - Decision Tree Regressor  
 - K-Nearest Neighbors (KNN) Regressor  
 
-### Hyperparameter Tuning
 
-- Logistic Regression: C, max_iter  
-- Decision Trees: max_depth, min_samples_split  
-- KNN: n_neighbors, weights  
-
----
 ## Visuals from the Application
 ---
 
