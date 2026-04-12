@@ -4,10 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.datasets import (
-    load_iris,
     load_breast_cancer,
     load_wine,
-    fetch_california_housing
+    fetch_california_housing,
+    load_diabetes
+
 )
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
@@ -17,6 +18,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor, plot_tree
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from sklearn import tree 
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
 
 from sklearn.metrics import (
     accuracy_score,
@@ -61,8 +65,8 @@ with button_expander:
 # sample data for users
 
 def load_sample_dataset(name):
-    if name == "Iris":
-        data = load_iris(as_frame=True)
+    if name == "Diabetes":
+        data = load_diabetes(as_frame=True)
         df = data.frame
     elif name == "Breast Cancer":
         data = load_breast_cancer(as_frame=True)
@@ -73,6 +77,7 @@ def load_sample_dataset(name):
     elif name == "California Housing":
         data = fetch_california_housing(as_frame=True)
         df = data.frame
+    
     return df
 
 # target column to guarantee it's not included in the features and to handle categorical targets for classification and numeric targets for regression
@@ -113,7 +118,11 @@ def compare_classification_models(X_train, X_test, y_train, y_test, random_state
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler()),
             ("model", KNeighborsClassifier())
-        ])
+        ]),
+        "Random Forest Classifier": Pipeline([
+            ("imputer", SimpleImputer(strategy="median")),
+            ("model", RandomForestClassifier(random_state=random_state))
+        ])  
     }
 
     results = []
@@ -151,7 +160,11 @@ def compare_regression_models(X_train, X_test, y_train, y_test, random_state):
             ("imputer", SimpleImputer(strategy="median")),
             ("scaler", StandardScaler()),
             ("model", KNeighborsRegressor())
-        ])
+        ]),
+        "Random Forest Regressor": Pipeline([
+            ("imputer", SimpleImputer(strategy="median")),
+            ("model", RandomForestRegressor(random_state=random_state))
+        ])  
     }
 
     results = []
@@ -188,7 +201,7 @@ df = None
 if dataset_option == "Use Sample Dataset":
     sample_name = st.sidebar.selectbox(
         "Choose a sample dataset:",
-        ["Iris", "Breast Cancer", "Wine", "California Housing"]
+        ["Diabetes", "Breast Cancer", "Wine", "California Housing"]
     )
     df = load_sample_dataset(sample_name)
 
@@ -241,12 +254,12 @@ if df is not None:
     if task_type == "Classification":
         model_name = st.sidebar.selectbox(
             "Select a classification model:",
-            ["Logistic Regression", "Decision Tree Classifier", "KNN Classifier"]
+            ["Logistic Regression", "Decision Tree Classifier", "KNN Classifier", 'Random Forest Classifier']
         )
     else:
         model_name = st.sidebar.selectbox(
             "Select a regression model:",
-            ["Linear Regression", "Decision Tree Regressor", "KNN Regressor"]
+            ["Linear Regression", "Decision Tree Regressor", "KNN Regressor", 'Random Forest Regressor']
         )
 
     st.sidebar.header("6. Hyperparameters")
@@ -263,6 +276,10 @@ if df is not None:
     elif model_name == "KNN Classifier":
         n_neighbors = st.sidebar.slider("Number of neighbors (k)", 1, 20, 5)
         weights = st.sidebar.selectbox("Weights", ["uniform", "distance"])
+    elif model_name == 'Random Forest Classifier':
+        n_estimators = st.sidebar.slider("Number of trees (n_estimators)", 10, 200, 100, step=10)
+        max_depth = st.sidebar.slider("Max depth", 1, 20, 5)
+        min_samples_split = st.sidebar.slider("Min samples split", 2, 20, 2)    
 
     elif model_name == "Decision Tree Regressor":
         max_depth = st.sidebar.slider("Max depth", 1, 20, 5)
@@ -271,11 +288,15 @@ if df is not None:
     elif model_name == "KNN Regressor":
         n_neighbors = st.sidebar.slider("Number of neighbors (k)", 1, 20, 5)
         weights = st.sidebar.selectbox("Weights", ["uniform", "distance"])
+    elif model_name == 'Random Forest Regressor':
+        n_estimators = st.sidebar.slider("Number of trees (n_estimators)", 10, 200, 100, step=10)
+        max_depth = st.sidebar.slider("Max depth", 1, 20, 5)
+        min_samples_split = st.sidebar.slider("Min samples split", 2, 20, 2)
 
     show_tree = False
     plot_depth = 3
 
-    if model_name in ["Decision Tree Classifier", "Decision Tree Regressor"]:
+    if model_name in ["Decision Tree Classifier", "Decision Tree Regressor", 'Random Forest Classifier', 'Random Forest Regressor']:
         st.sidebar.header("7. Tree Visualization")
         show_tree = st.sidebar.checkbox("Show Decision Tree", value=False)
         plot_depth = st.sidebar.slider("Tree plot depth", 1, 10, 3)
@@ -308,7 +329,7 @@ if df is not None:
         st.write(f"Feature matrix shape: {X.shape}")
         st.write(f"Task type selected: {task_type}")
 
-
+# MODELS AVAIALBEL FOR SLECTIOM AND TRAINING CODE
 
     if train_model:
         try:
@@ -346,6 +367,17 @@ if df is not None:
                         weights=weights
                     ))
                 ])
+            elif model_name == 'Random Forest Classifier':
+                model = Pipeline([
+                    ("imputer", SimpleImputer(strategy="median")),
+                    ("model", RandomForestClassifier(
+                        n_estimators=n_estimators,
+                        max_depth=max_depth,
+                        min_samples_split=min_samples_split,
+                        random_state=random_state
+                    ))
+                ])
+            
 
             elif model_name == "Linear Regression":
                 model = Pipeline([
@@ -373,9 +405,20 @@ if df is not None:
                         weights=weights
                     ))
                 ])
+            elif model_name == 'Random Forest Regressor':
+                model = Pipeline([
+                    ("imputer", SimpleImputer(strategy="median")),
+                    ("model", RandomForestRegressor(
+                        n_estimators=n_estimators,
+                        max_depth=max_depth,
+                        min_samples_split=min_samples_split,
+                        random_state=random_state
+                    ))
+                ])
 
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
+# TABS BASED ON MODEL TYPE AND SELECTION 
 
             if task_type == "Classification":
                 accuracy = accuracy_score(y_test, y_pred)
@@ -396,7 +439,7 @@ if df is not None:
                 comparison_df = compare_classification_models(
                     X_train, X_test, y_train, y_test, random_state
                 )
-
+# TAB 2 FOR CLASSIFICATION MODELS performance metrics and prediction 
                 with tab2:
                     st.subheader("Model Performance")
                     m1, m2, m3, m4 = st.columns(4)
@@ -407,6 +450,7 @@ if df is not None:
 
                     st.subheader("Prediction Preview")
                     st.dataframe(results_df.head(20))
+# tab 3 for classification models (decision tree and randome forrest)
 
                 with tab3:
                     st.subheader("Confusion Matrix")
@@ -456,6 +500,7 @@ if df is not None:
                         st.subheader("Feature Importances")
                         st.dataframe(importance_df.head(10))
                         st.pyplot(fig_imp)
+                    
 
                         if show_tree:
                             st.subheader("Decision Tree Visualization")
@@ -471,12 +516,93 @@ if df is not None:
                                 ax=ax_tree
                             )
                             st.pyplot(fig_tree)
+                # random forrect classifier feature importanc and visualization
 
+                    if model_name == "Random Forest Classifier":
+                        forest_model = model.named_steps["model"]
+                        importance_df = pd.DataFrame({
+                            "Feature": X.columns,
+                            "Importance": forest_model.feature_importances_
+                        }).sort_values(by="Importance", ascending=False)
+
+                        fig_imp, ax_imp = plt.subplots(figsize=(8, 5))
+                        ax_imp.barh(
+                            importance_df["Feature"].head(10)[::-1],
+                            importance_df["Importance"].head(10)[::-1]
+                        )
+                        ax_imp.set_title("Top 10 Feature Importances")
+
+                        st.subheader("Feature Importances")
+                        st.dataframe(importance_df.head(10))
+                        st.pyplot(fig_imp)
+                        
+                        if show_tree:
+                            st.subheader("Random Forest Visualization")
+                            st.write("Visualizing individual trees from a random forest can be complex, but here is one of the trees in the forest:")
+                            fig_tree, ax_tree = plt.subplots(figsize=(20, 10))
+                            plot_tree(
+                                forest_model.estimators_[0],
+                                feature_names=X.columns,
+                                class_names=[str(c) for c in np.unique(y_train)],
+                                filled=True,
+                                rounded=True,
+                                fontsize=8,
+                                max_depth=plot_depth,
+                                ax=ax_tree
+                            )
+                            st.pyplot(fig_tree)
+                
+# TAB 4 model comaprison, performance metrics and roc and auc curve compariosn between models (classification)
                 with tab4:
                     st.subheader("Model Comparison")
                     st.dataframe(comparison_df)
+                    st.subheader("ROC Curve Comparison Across Models")
+                    def plot_model_roc_comparison(X_train, X_test, y_train, y_test, random_state):
+                        models = {
+                            "Logistic Regression": Pipeline([
+                                ("imputer", SimpleImputer(strategy="median")),
+                                ("scaler", StandardScaler()),
+                                ("model", LogisticRegression(max_iter=300))
+                            ]),
+                            "Decision Tree Classifier": Pipeline([
+                                ("imputer", SimpleImputer(strategy="median")),
+                                ("model", DecisionTreeClassifier(random_state=random_state))
+                            ]),
+                            "KNN Classifier": Pipeline([
+                                ("imputer", SimpleImputer(strategy="median")),
+                                ("scaler", StandardScaler()),
+                                ("model", KNeighborsClassifier())
+                            ]),
+                            "Random Forest Classifier": Pipeline([
+                                ("imputer", SimpleImputer(strategy="median")),
+                                ("model", RandomForestClassifier(random_state=random_state))
+                            ])
 
-            else:
+                        }
+
+                        fig, ax = plt.subplots(figsize=(8, 6))
+
+                        for name, model in models.items():
+                            model.fit(X_train, y_train)
+
+                            if hasattr(model.named_steps["model"], "predict_proba"):
+                                y_probs = model.predict_proba(X_test)[:, 1]
+                                fpr, tpr, _ = roc_curve(y_test, y_probs)
+                                auc_score = roc_auc_score(y_test, y_probs)
+                                ax.plot(fpr, tpr, label=f"{name} (AUC = {auc_score:.3f})")
+
+                        ax.plot([0, 1], [0, 1], linestyle="--")
+                        ax.set_xlabel("False Positive Rate")
+                        ax.set_ylabel("True Positive Rate")
+                        ax.set_title("ROC Curve Comparison")
+                        ax.legend()
+
+                        return fig
+                    roc_fig = plot_model_roc_comparison(X_train, X_test, y_train, y_test, random_state)
+                    st.pyplot(roc_fig)
+                    
+
+            else:# this else is to hanlde regression models (not clasfication = regression)
                 r2 = r2_score(y_test, y_pred)
                 mae = mean_absolute_error(y_test, y_pred)
                 mse = mean_squared_error(y_test, y_pred)
@@ -556,10 +682,46 @@ if df is not None:
                                 ax=ax_tree
                             )
                             st.pyplot(fig_tree)
+                    if model_name == "Random Forest Regressor":
+                        forest_model = model.named_steps["model"]
+                        importance_df = pd.DataFrame({
+                            "Feature": X.columns,
+                            "Importance": forest_model.feature_importances_
+                        }).sort_values(by="Importance", ascending=False)
+
+                        fig_imp, ax_imp = plt.subplots(figsize=(8, 5))
+                        ax_imp.barh(
+                            importance_df["Feature"].head(10)[::-1],
+                            importance_df["Importance"].head(10)[::-1]
+                        )
+                        ax_imp.set_title("Top 10 Feature Importances")
+
+                        st.subheader("Feature Importances")
+                        st.dataframe(importance_df.head(10))
+                        st.pyplot(fig_imp)
+                        
+                        if show_tree:
+                            st.subheader("Random Forest Visualization")
+                            st.write("Visualizing individual trees from a random forest can be complex, but here is one of the trees in the forest:")
+                            fig_tree, ax_tree = plt.subplots(figsize=(20, 10))
+                            plot_tree(
+                                forest_model.estimators_[0],
+                                feature_names=X.columns,
+                                filled=True,
+                                rounded=True,
+                                fontsize=8,
+                                max_depth=plot_depth,
+                                ax=ax_tree
+                            )
+                            st.pyplot(fig_tree)
+
+                        
+        
 
                 with tab4:
                     st.subheader("Model Comparison")
                     st.dataframe(comparison_df)
+                
 
         except Exception as e:
             st.error(f"An error occurred during model training: {e}")
