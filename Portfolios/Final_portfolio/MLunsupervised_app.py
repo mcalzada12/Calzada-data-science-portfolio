@@ -287,6 +287,10 @@ st.expander(" 📲 About This App! ").markdown(
     
     Unsupervised learning can be a powerful way to find patterns and groupings in data without predefined labels. 
     Use this app to experiment and gain insights from your data!
+
+    * bonus! we have added a new tab in the app that provides feature analysis diagnostics to help you decide which 
+    features to keep or drop before training your model. This includes variance analysis, correlation heatmaps, cluster discriminative power, 
+    and PCA loadings. These tools will guide you in selecting the most informative features for better clustering results.
     """,
     unsafe_allow_html=True,
 )
