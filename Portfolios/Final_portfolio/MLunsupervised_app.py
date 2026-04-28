@@ -908,7 +908,8 @@ with tab_evaluate:
             ax.set_yticks([])
             st.pyplot(fig)
             plt.close(fig)
-            st.info(f"Average silhouette score: **{sil_avg:.3f}**")
+            st.info(f"Average silhouette score: **{sil_avg:.3f}**"
+                   " Near +1 (e.g., > 0.7): Strong structure; points are well-clustered and distinct. Above 0.5: Reasonable or good clustering. Near 0 (e.g., 0.25 - 0.5): Weak structure; indicates overlapping clusters.Below 0 (Negative): Mismatched data; points likely assigned to the wrong cluster")
 
     # --- Dendrogram
     with diag_tabs[2]:
