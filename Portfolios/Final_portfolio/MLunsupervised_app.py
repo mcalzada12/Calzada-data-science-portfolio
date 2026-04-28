@@ -945,6 +945,8 @@ with tab_evaluate:
             )
         dend_link = st.selectbox("Linkage", ["ward", "complete", "average", "single"], key="dend_link")
         truncate_at = st.slider("Show last N merges", 5, 50, 30, key="dend_trunc")
+        suggest_k = st.slider("Show suggested cut for k =", 2, 10, 3, key="dend_k")
+        
         if st.button("Plot dendrogram", key="dend_btn"):
             n_for_dendro = min(500, len(X_scaled))
             if len(X_scaled) > 500:
@@ -983,7 +985,7 @@ with tab_evaluate:
                     label=f"Cut for k={suggest_k} (height ≈ {cut_height:.2f})",
                 )
                 ax.legend(loc="upper right")
-                
+
             ax.set_title(f"Dendrogram (linkage = {dend_link})")
             ax.set_xlabel("Sample index or (cluster size)")
             ax.set_ylabel("Distance")
