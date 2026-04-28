@@ -41,7 +41,7 @@ from sklearn.datasets import (
     make_circles,
 )
 
-
+ 
 # PAGE CONFIG & STYLING
 
 st.set_page_config(
@@ -420,6 +420,16 @@ with st.sidebar:
             "Initialization", ["k-means++", "random"],
             help="How starting cluster centers are chosen. 'k-means++' spreads them apart smartly (recommended). 'random' picks them randomly — faster but often produces worse results.",
         )
+        if params["init"] == "k-means++":
+            st.caption(
+                "📌 **k-means++**: spreads starting centers far apart on purpose. "
+                "More reliable, converges faster, less likely to get stuck in a bad solution. *Recommended default.*"
+            )
+        else:
+            st.caption(
+                "📌 **random**: picks starting centers completely at random. "
+                "Faster per run but can land in a bad local minimum — increase 'Number of initializations' to compensate."
+            )
         params["n_init"] = st.slider(
             "Number of initializations", 1, 20, 10,
             help="K-Means is sensitive to starting positions. This runs the algorithm N times with different starts and keeps the best one. Higher = more reliable but slower.",
@@ -450,6 +460,17 @@ with st.sidebar:
                 "• single — distance between closest points (can produce stretched 'chaining' clusters)"
             ),
         )
+        linkage_descriptions = {
+            "ward": "📌 **Ward**: merges the pair of clusters that increases overall variance the least. "
+                    "Tends to produce balanced, compact clusters. *Best general-purpose default.*",
+            "complete": "📌 **Complete**: distance between two clusters = distance between their *farthest* members. "
+                        "Produces tight, equal-sized clusters. Sensitive to outliers.",
+            "average": "📌 **Average**: distance between two clusters = mean distance across all pairs of members. "
+                       "A balanced compromise between single and complete linkage.",
+            "single": "📌 **Single**: distance between two clusters = distance between their *closest* members. "
+                      "Can find non-elliptical shapes but often produces stringy 'chaining' artifacts.",
+        }
+        st.caption(linkage_descriptions[params["linkage"]])
         if params["linkage"] == "ward":
             params["metric"] = "euclidean"
             st.caption("ℹ️ Ward linkage requires Euclidean distance.")
@@ -463,6 +484,15 @@ with st.sidebar:
                     "• cosine — angle between vectors, ignores magnitude (good for text or sparse data)"
                 ),
             )
+            metric_descriptions = {
+                "euclidean": "📌 **Euclidean**: straight-line ('as the crow flies') distance. "
+                             "Most natural for continuous numeric data. *Default choice.*",
+                "manhattan": "📌 **Manhattan**: sum of absolute differences along each axis (like walking city blocks). "
+                             "More robust to outliers than Euclidean.",
+                "cosine": "📌 **Cosine**: measures the *angle* between vectors, ignoring magnitude. "
+                          "Useful when you care about direction/pattern rather than scale (e.g., text data, ratings).",
+            }
+            st.caption(metric_descriptions[params["metric"]])
     elif algorithm == "PCA (Dimensionality Reduction)":
         st.caption(
             "💡 PCA finds linear combinations of features (called 'principal components') that capture the most variance. Useful for compressing data, removing correlated features, and visualizing high-dimensional data in 2D/3D."
@@ -523,6 +553,7 @@ with tab_overview:
 
 
 # TAB 2 — DATA EXPLORATION
+
 with tab_explore:
     st.subheader("Explore feature distributions and relationships")
 
@@ -571,7 +602,9 @@ with tab_explore:
     st.plotly_chart(fig, use_container_width=True)
 
 
+
 # TAB 3 — TRAIN MODEL
+
 with tab_model:
     st.subheader(f"Run: {algorithm}")
 
@@ -792,7 +825,9 @@ with tab_model:
         st.info("👆 Click **Train model** to run the selected algorithm with your chosen hyperparameters.")
 
 
+
 # TAB 4 — EVALUATE
+
 with tab_evaluate:
     st.subheader("Diagnostic plots & model selection tools")
     st.write("These plots help you choose good hyperparameters — they run independently of the main model.")
@@ -958,7 +993,9 @@ with tab_evaluate:
             )
 
 
+
 # TAB 5 — INTERPRET
+
 with tab_interpret:
     st.subheader("Make sense of the clusters")
 
@@ -1069,6 +1106,7 @@ with tab_interpret:
             st.markdown(f"- {line}")
 
 
+
 # TAB 6 — EXPORT
 with tab_export:
     st.subheader("Download your results")
@@ -1121,7 +1159,9 @@ with tab_export:
         st.info("Train a model first — then come back here to download results.")
 
 
+
 # FOOTER
+
 st.markdown("---")
 st.markdown(
     """
