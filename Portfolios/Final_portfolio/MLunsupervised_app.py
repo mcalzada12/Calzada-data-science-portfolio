@@ -652,7 +652,7 @@ with tab_features:
                 "raw_variance": "{:.3f}",
                 "raw_std": "{:.3f}",
                 "coef_of_variation": "{:.3f}",
-            }, na_rep="N/A").background_gradient(subset=["raw_variance"], cmap="Viridis"),
+            }, na_rep="N/A").background_gradient(subset=["raw_variance"], cmap="viridis"),
             use_container_width=True,
         )
  
@@ -789,7 +789,7 @@ with tab_features:
                     "F_statistic": "{:.2f}",
                     "p_value": "{:.2e}",
                     "eta_squared": "{:.3f}",
-                }).background_gradient(subset=["F_statistic"], cmap="Viridis"),
+                }).background_gradient(subset=["F_statistic"], cmap="viridis"),
                 use_container_width=True,
             )
             st.caption(
