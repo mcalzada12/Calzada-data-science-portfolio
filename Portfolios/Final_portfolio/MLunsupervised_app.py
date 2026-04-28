@@ -640,7 +640,7 @@ with tab_features:
         fig = px.bar(
             var_df, x="feature", y="raw_variance",
             color="raw_variance",
-            color_continuous_scale="Viridis",
+            color_continuous_scale="viridis",
             height=400,
             title="Raw variance per feature (before scaling)",
         )
