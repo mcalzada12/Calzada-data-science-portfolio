@@ -404,9 +404,9 @@ with st.sidebar:
 # Apply preprocessing
 df_clean, X_raw, X_scaled = preprocess_data(df, selected_features, scaler_type, handle_na)
 
-#
+
 # SIDEBAR — ALGORITHM SELECTION
-# 
+
 with st.sidebar:
     st.header("🧪 3. Algorithm")
     algorithm = st.selectbox(
@@ -414,7 +414,6 @@ with st.sidebar:
         [
             "K-Means Clustering",
             "Hierarchical Clustering",
-            "DBSCAN",
             "PCA (Dimensionality Reduction)",
         ],
     )
@@ -438,11 +437,6 @@ with st.sidebar:
             st.caption("ℹ️ Ward linkage requires Euclidean distance.")
         else:
             params["metric"] = st.selectbox("Distance metric", ["euclidean", "manhattan", "cosine"])
-    elif algorithm == "DBSCAN":
-        params["eps"] = st.slider("eps (neighborhood radius)", 0.05, 5.0, 0.5, step=0.05)
-        params["min_samples"] = st.slider("min_samples", 2, 50, 5)
-        params["metric"] = st.selectbox("Distance metric", ["euclidean", "manhattan", "cosine"])
-        st.caption("💡 DBSCAN finds clusters of arbitrary shape and labels outliers as -1 (noise).")
     elif algorithm == "PCA (Dimensionality Reduction)":
         max_comp = min(len(selected_features), len(X_scaled))
         params["n_components"] = st.slider("Number of components", 2, max_comp, min(3, max_comp))
@@ -580,13 +574,6 @@ with tab_model:
                     )
                     labels = model.fit_predict(X_scaled)
 
-                elif algorithm == "DBSCAN":
-                    model = DBSCAN(
-                        eps=params["eps"],
-                        min_samples=params["min_samples"],
-                        metric=params["metric"],
-                    )
-                    labels = model.fit_predict(X_scaled)
 
                 elif algorithm == "PCA (Dimensionality Reduction)":
                     model = PCA(n_components=params["n_components"])
@@ -773,11 +760,6 @@ with tab_model:
             st.plotly_chart(fig, use_container_width=True)
             st.dataframe(evr_df, use_container_width=True)
 
-        if algo == "Gaussian Mixture Model":
-            ic_cols = st.columns(3)
-            ic_cols[0].metric("Log-likelihood", f"{extra_info.get('log_likelihood', 0):.1f}")
-            ic_cols[1].metric("BIC", f"{extra_info.get('bic', 0):.1f}", help="Lower is better")
-            ic_cols[2].metric("AIC", f"{extra_info.get('aic', 0):.1f}", help="Lower is better")
 
     else:
         st.info("👆 Click **Train model** to run the selected algorithm with your chosen hyperparameters.")
