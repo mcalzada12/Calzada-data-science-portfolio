@@ -1,9 +1,9 @@
 """
-Unsupervised ML Explorer
+🔮 Unsupervised ML Explorer
 A comprehensive Streamlit app for unsupervised machine learning exploration.
 
 Features:
-- Multiple algorithms: K-Means, Hierarchical, DBSCAN, GMM, PCA, t-SNE, UMAP
+- Three algorithms: K-Means, Hierarchical clustering, PCA
 - Built-in sample datasets + custom upload
 - Rich visualizations: elbow plots, silhouette analysis, dendrograms, 3D plots
 - Automated preprocessing pipeline
@@ -25,9 +25,7 @@ from scipy.spatial.distance import pdist
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 from sklearn.decomposition import PCA
-from sklearn.manifold import TSNE
-from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
-from sklearn.mixture import GaussianMixture
+from sklearn.cluster import KMeans, AgglomerativeClustering
 from sklearn.metrics import (
     silhouette_score,
     silhouette_samples,
@@ -45,7 +43,7 @@ from sklearn.datasets import (
 
 
 # PAGE CONFIG & STYLING
-# 
+
 st.set_page_config(
     page_title="Unsupervised ML Explorer",
     page_icon="🔮",
@@ -53,7 +51,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-
+# Custom CSS for a polished look
 st.markdown(
     """
     <style>
@@ -109,7 +107,6 @@ st.markdown(
 
 
 # DATA LOADING UTILITIES
-
 @st.cache_data
 def load_sample_dataset(name: str):
     """Load one of the built-in sample datasets."""
@@ -181,14 +178,13 @@ def get_dataset_description(name: str) -> str:
         "Breast Cancer": "🔬 569 tumor samples with 30 features. Binary clustering challenge with clinical relevance.",
         "Synthetic Blobs": "🟣 300 points in 5D forming 4 clear gaussian blobs. Easy mode — for verifying algorithms work.",
         "Two Moons": "🌙 Two interleaved half-circles. Linear methods fail; tests non-convex clustering.",
-        "Concentric Circles": "⭕ Two nested rings. Notoriously hard for K-Means; great for DBSCAN/spectral methods.",
+        "Concentric Circles": "⭕ Two nested rings. Notoriously hard for K-Means — useful for showing where centroid-based methods fail.",
         "Mall Customers (synthetic)": "🛍️ 200 customers with age, income, and spending score. Classic segmentation use case.",
     }
     return descriptions.get(name, "")
 
 
 # PREPROCESSING
-
 def preprocess_data(df: pd.DataFrame, features: list, scaler_type: str, handle_na: str):
     """Apply preprocessing pipeline and return cleaned + scaled data."""
     X = df[features].copy()
@@ -231,7 +227,7 @@ def preprocess_data(df: pd.DataFrame, features: list, scaler_type: str, handle_n
 def compute_metrics(X, labels):
     """Compute silhouette, CH, and DB scores. Returns None for any that can't be computed."""
     metrics = {}
-    unique_labels = set(labels) - {-1}  # exclude DBSCAN noise
+    unique_labels = set(labels) - {-1}  # -1 reserved for noise labels (defensive)
     n_clusters = len(unique_labels)
 
     if n_clusters >= 2:
@@ -264,9 +260,7 @@ def compute_metrics(X, labels):
     return metrics
 
 
-
 # SIDEBAR — DATA INPUT
-
 st.markdown('<div class="main-header">🔮 Unsupervised ML Explorer</div>', unsafe_allow_html=True)
 st.markdown(
     '<div class="sub-header">Discover hidden structure in your data with clustering and dimensionality reduction.</div>',
@@ -310,9 +304,7 @@ with st.sidebar:
         else:
             st.warning("👆 Upload a CSV file or switch to a sample dataset.")
 
-
 # MAIN AREA — IF NO DATA YET
-
 if df is None:
     st.markdown(
         """
@@ -336,13 +328,10 @@ if df is None:
         st.markdown("### 🎯 Clustering")
         st.write("- **K-Means**: Fast, spherical clusters")
         st.write("- **Hierarchical**: Tree-based, with dendrograms")
-        st.write("- **DBSCAN**: Density-based, finds noise")
-        st.write("- **Gaussian Mixture**: Probabilistic, soft clustering")
     with col2:
         st.markdown("### 📐 Dimensionality Reduction")
         st.write("- **PCA**: Linear, fast, interpretable")
-        st.write("- **t-SNE**: Non-linear, great visuals")
-        st.write("- **Truncated SVD**: For sparse data")
+        st.write("- Optional: cluster on PCA output")
     with col3:
         st.markdown("### 📊 Evaluation")
         st.write("- **Elbow method** for optimal k")
@@ -351,9 +340,7 @@ if df is None:
         st.write("- **Cluster profiling**")
     st.stop()
 
-
 # SIDEBAR — FEATURE SELECTION & PREPROCESSING
-
 with st.sidebar:
     st.header("⚙️ 2. Features & Preprocessing")
 
@@ -404,9 +391,7 @@ with st.sidebar:
 # Apply preprocessing
 df_clean, X_raw, X_scaled = preprocess_data(df, selected_features, scaler_type, handle_na)
 
-
 # SIDEBAR — ALGORITHM SELECTION
-
 with st.sidebar:
     st.header("🧪 3. Algorithm")
     algorithm = st.selectbox(
@@ -424,31 +409,81 @@ with st.sidebar:
     # Algorithm-specific hyperparameters
     params = {}
     if algorithm == "K-Means Clustering":
-        params["n_clusters"] = st.slider("Number of clusters (k)", 2, 15, 3)
-        params["init"] = st.selectbox("Initialization", ["k-means++", "random"])
-        params["n_init"] = st.slider("Number of initializations", 1, 20, 10)
-        params["max_iter"] = st.slider("Max iterations", 50, 1000, 300, step=50)
-        params["random_state"] = st.number_input("Random seed", 0, 1000, 42)
+        st.caption(
+            "💡 K-Means partitions points into k spherical clusters by minimizing distance to cluster centers."
+        )
+        params["n_clusters"] = st.slider(
+            "Number of clusters (k)", 2, 15, 3,
+            help="How many groups to split your data into. Use the elbow method or silhouette analysis to pick this. Too few → loses structure; too many → overfits to noise.",
+        )
+        params["init"] = st.selectbox(
+            "Initialization", ["k-means++", "random"],
+            help="How starting cluster centers are chosen. 'k-means++' spreads them apart smartly (recommended). 'random' picks them randomly — faster but often produces worse results.",
+        )
+        params["n_init"] = st.slider(
+            "Number of initializations", 1, 20, 10,
+            help="K-Means is sensitive to starting positions. This runs the algorithm N times with different starts and keeps the best one. Higher = more reliable but slower.",
+        )
+        params["max_iter"] = st.slider(
+            "Max iterations", 50, 1000, 300, step=50,
+            help="Maximum refinement steps per run. The algorithm usually converges well before this limit. Increase only if you see convergence warnings.",
+        )
+        params["random_state"] = st.number_input(
+            "Random seed", 0, 1000, 42,
+            help="Fixes the randomness so results are reproducible. Change it to test how sensitive your clusters are to the random starting point.",
+        )
     elif algorithm == "Hierarchical Clustering":
-        params["n_clusters"] = st.slider("Number of clusters", 2, 15, 3)
-        params["linkage"] = st.selectbox("Linkage method", ["ward", "complete", "average", "single"])
+        st.caption(
+            "💡 Hierarchical clustering builds a tree by repeatedly merging the closest pairs of points/clusters. Use the Dendrogram tab to visualize the merge structure."
+        )
+        params["n_clusters"] = st.slider(
+            "Number of clusters", 2, 15, 3,
+            help="Where to 'cut' the dendrogram tree. Use the Dendrogram tab to pick a sensible cut height visually — look for the largest vertical gap.",
+        )
+        params["linkage"] = st.selectbox(
+            "Linkage method", ["ward", "complete", "average", "single"],
+            help=(
+                "How to measure distance between clusters when merging:\n\n"
+                "• ward — minimizes variance within clusters (best default, balanced clusters)\n\n"
+                "• complete — distance between farthest points (compact, equal-diameter clusters)\n\n"
+                "• average — mean distance between all pairs (balanced)\n\n"
+                "• single — distance between closest points (can produce stretched 'chaining' clusters)"
+            ),
+        )
         if params["linkage"] == "ward":
             params["metric"] = "euclidean"
             st.caption("ℹ️ Ward linkage requires Euclidean distance.")
         else:
-            params["metric"] = st.selectbox("Distance metric", ["euclidean", "manhattan", "cosine"])
+            params["metric"] = st.selectbox(
+                "Distance metric", ["euclidean", "manhattan", "cosine"],
+                help=(
+                    "How to measure distance between two points:\n\n"
+                    "• euclidean — straight-line distance (most common)\n\n"
+                    "• manhattan — city-block distance, sum of absolute differences (more robust to outliers)\n\n"
+                    "• cosine — angle between vectors, ignores magnitude (good for text or sparse data)"
+                ),
+            )
     elif algorithm == "PCA (Dimensionality Reduction)":
+        st.caption(
+            "💡 PCA finds linear combinations of features (called 'principal components') that capture the most variance. Useful for compressing data, removing correlated features, and visualizing high-dimensional data in 2D/3D."
+        )
         max_comp = min(len(selected_features), len(X_scaled))
-        params["n_components"] = st.slider("Number of components", 2, max_comp, min(3, max_comp))
+        params["n_components"] = st.slider(
+            "Number of components", 2, max_comp, min(3, max_comp),
+            help="How many principal components to keep. Each captures successively less variance. Look at the cumulative variance plot after training to pick a value that explains ~80–95% of total variance.",
+        )
         params["follow_with_clustering"] = st.checkbox(
-            "Cluster on PCA output (K-Means)", value=False
+            "Cluster on PCA output (K-Means)", value=False,
+            help="After reducing dimensions with PCA, run K-Means on the result. Often improves clustering quality and speed when you have many correlated or noisy features.",
         )
         if params["follow_with_clustering"]:
-            params["n_clusters_after_pca"] = st.slider("k for K-Means on PCA", 2, 15, 3)
+            params["n_clusters_after_pca"] = st.slider(
+                "k for K-Means on PCA", 2, 15, 3,
+                help="Number of clusters for the K-Means step that runs on the PCA output.",
+            )
 
 
 # MAIN AREA — TABS
-
 tab_overview, tab_explore, tab_model, tab_evaluate, tab_interpret, tab_export = st.tabs(
     [
         "📊 Overview",
@@ -460,8 +495,8 @@ tab_overview, tab_explore, tab_model, tab_evaluate, tab_interpret, tab_export = 
     ]
 )
 
-# TAB 1 — OVERVIEW
 
+# TAB 1 — OVERVIEW
 with tab_overview:
     st.subheader("Dataset Overview")
 
@@ -485,7 +520,6 @@ with tab_overview:
             "Unique": [df[c].nunique() for c in df.columns],
         })
         st.dataframe(info_df, use_container_width=True)
-
 
 
 # TAB 2 — DATA EXPLORATION
@@ -537,7 +571,6 @@ with tab_explore:
     st.plotly_chart(fig, use_container_width=True)
 
 
-
 # TAB 3 — TRAIN MODEL
 with tab_model:
     st.subheader(f"Run: {algorithm}")
@@ -573,7 +606,6 @@ with tab_model:
                         metric=params["metric"],
                     )
                     labels = model.fit_predict(X_scaled)
-
 
                 elif algorithm == "PCA (Dimensionality Reduction)":
                     model = PCA(n_components=params["n_components"])
@@ -638,10 +670,6 @@ with tab_model:
                 mcols[3].metric("Davies-Bouldin", f"{metrics['davies_bouldin']:.3f}", help="Lower is better")
             else:
                 mcols[3].metric("Davies-Bouldin", "N/A")
-
-            if -1 in labels:
-                n_noise = int((labels == -1).sum())
-                st.info(f"ℹ️ DBSCAN identified {n_noise} noise points (label = -1).")
 
         # Visualization — primary 2D view
         st.markdown("#### 🖼️ Cluster visualization")
@@ -760,13 +788,11 @@ with tab_model:
             st.plotly_chart(fig, use_container_width=True)
             st.dataframe(evr_df, use_container_width=True)
 
-
     else:
         st.info("👆 Click **Train model** to run the selected algorithm with your chosen hyperparameters.")
 
 
 # TAB 4 — EVALUATE
-
 with tab_evaluate:
     st.subheader("Diagnostic plots & model selection tools")
     st.write("These plots help you choose good hyperparameters — they run independently of the main model.")
@@ -888,27 +914,21 @@ with tab_evaluate:
     # --- Method comparison
     with diag_tabs[3]:
         st.markdown("#### Compare clustering methods")
-        st.caption("Side-by-side scoreboard of common methods on the current data.")
-        cmp_k = st.slider("k (where applicable)", 2, 10, 3, key="cmp_k")
-        cmp_eps = st.slider("DBSCAN eps", 0.1, 3.0, 0.5, step=0.05, key="cmp_eps")
-        cmp_min = st.slider("DBSCAN min_samples", 2, 20, 5, key="cmp_min")
+        st.caption("Side-by-side scoreboard of clustering variants on the current data.")
+        cmp_k = st.slider("Number of clusters (k)", 2, 10, 3, key="cmp_k")
         if st.button("Run comparison", key="cmp_btn"):
             results = []
             algos = {
                 "K-Means": KMeans(n_clusters=cmp_k, n_init=10, random_state=42),
-                "Agglomerative (ward)": AgglomerativeClustering(n_clusters=cmp_k, linkage="ward"),
-                "Agglomerative (avg)": AgglomerativeClustering(n_clusters=cmp_k, linkage="average"),
-                "GMM": GaussianMixture(n_components=cmp_k, random_state=42),
-                "DBSCAN": DBSCAN(eps=cmp_eps, min_samples=cmp_min),
+                "Hierarchical (ward)": AgglomerativeClustering(n_clusters=cmp_k, linkage="ward"),
+                "Hierarchical (complete)": AgglomerativeClustering(n_clusters=cmp_k, linkage="complete"),
+                "Hierarchical (average)": AgglomerativeClustering(n_clusters=cmp_k, linkage="average"),
+                "Hierarchical (single)": AgglomerativeClustering(n_clusters=cmp_k, linkage="single"),
             }
             for name, m in algos.items():
                 t0 = time.time()
                 try:
-                    if name == "GMM":
-                        m.fit(X_scaled)
-                        lbl = m.predict(X_scaled)
-                    else:
-                        lbl = m.fit_predict(X_scaled)
+                    lbl = m.fit_predict(X_scaled)
                     metrics = compute_metrics(X_scaled.values, lbl)
                     results.append({
                         "Method": name,
@@ -939,7 +959,6 @@ with tab_evaluate:
 
 
 # TAB 5 — INTERPRET
-
 with tab_interpret:
     st.subheader("Make sense of the clusters")
 
@@ -1032,9 +1051,6 @@ with tab_interpret:
         st.markdown("#### 📝 Auto-generated cluster summary")
         narrative_lines = []
         for c in sorted(df_int["cluster"].unique()):
-            if c == -1:
-                narrative_lines.append(f"**Noise**: {(df_int['cluster']==c).sum()} points labeled as outliers by DBSCAN.")
-                continue
             sub = df_int[df_int["cluster"] == c]
             size = len(sub)
             pct = size / len(df_int) * 100
@@ -1051,7 +1067,6 @@ with tab_interpret:
                 )
         for line in narrative_lines:
             st.markdown(f"- {line}")
-
 
 
 # TAB 6 — EXPORT
