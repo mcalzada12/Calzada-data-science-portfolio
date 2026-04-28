@@ -912,7 +912,7 @@ with tab_evaluate:
             st.pyplot(fig)
             plt.close(fig)
             st.info(f"Average silhouette score: **{sil_avg:.3f}**" )
-            flexible_callout(" Near +1 (e.g., > 0.7): Strong structure; points are well-clustered and distinct. ", container=st, background_color="#F6F89D", border_color="#A0A0A0")
+            flexible_callout(" Near +1 (e.g., > 0.7): Strong structure; points are well-clustered and distinct. ", container=st, background_color="#F6F89D",)
 
     # --- Dendrogram
     with diag_tabs[2]:
