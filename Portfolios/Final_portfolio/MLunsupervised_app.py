@@ -921,6 +921,28 @@ with tab_evaluate:
     with diag_tabs[2]:
         st.markdown("#### Hierarchical clustering dendrogram")
         st.caption("The y-axis shows merge distances. Cut horizontally to choose number of clusters.")
+        with st.expander("📖 How to read a dendrogram", expanded=False):
+            st.markdown(
+                """
+                A dendrogram is a tree showing **how points were merged** into clusters, step by step.
+ 
+                **The axes:**
+                - **X-axis:** individual samples (or clusters of samples — numbers in parentheses are cluster sizes after truncation).
+                - **Y-axis:** the *distance* at which two clusters were merged. Higher = more dissimilar.
+ 
+                **How to read it:**
+                - Each horizontal line connects two clusters that were merged. The height tells you how far apart they were.
+                - Short merges near the bottom = points that are very similar.
+                - Tall merges near the top = clusters that are quite different from each other.
+ 
+                **How to choose the number of clusters (k):**
+                1. Imagine a horizontal line cutting across the tree.
+                2. Count how many vertical lines it crosses — that's your k.
+                3. **The best place to cut is where you'd cross the largest vertical gap** (a long stretch with no merges happening). This gap means the clusters above the line are very different from each other, so cutting there gives you well-separated groups.
+ 
+                **Color meaning:** scipy automatically colors clusters that are below an internal threshold differently. Same-colored branches belong to the same "natural" cluster at scipy's chosen cut height.
+                """
+            )
         dend_link = st.selectbox("Linkage", ["ward", "complete", "average", "single"], key="dend_link")
         truncate_at = st.slider("Show last N merges", 5, 50, 30, key="dend_trunc")
         if st.button("Plot dendrogram", key="dend_btn"):
@@ -935,6 +957,12 @@ with tab_evaluate:
 
             with st.spinner("Computing linkage..."):
                 Z = linkage(X_dend, method=dend_link)
+            
+            distances = Z[:, 2]
+            if suggest_k <= len(distances):
+                cut_height = (distances[-suggest_k] + distances[-suggest_k + 1]) / 2 if suggest_k > 1 else distances[-1] * 1.1
+            else:
+                cut_height = None
 
             fig, ax = plt.subplots(figsize=(12, 6))
             dendrogram(
@@ -947,6 +975,15 @@ with tab_evaluate:
                 color_threshold=0.7 * max(Z[:, 2]),
                 ax=ax,
             )
+
+            # Draw the suggested cut line
+            if cut_height is not None:
+                ax.axhline(
+                    y=cut_height, color="red", linestyle="--", linewidth=2,
+                    label=f"Cut for k={suggest_k} (height ≈ {cut_height:.2f})",
+                )
+                ax.legend(loc="upper right")
+                
             ax.set_title(f"Dendrogram (linkage = {dend_link})")
             ax.set_xlabel("Sample index or (cluster size)")
             ax.set_ylabel("Distance")
