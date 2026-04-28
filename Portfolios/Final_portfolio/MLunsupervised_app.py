@@ -54,9 +54,10 @@ st.set_page_config(
     page_icon="🔮",
     layout="wide",
     initial_sidebar_state="expanded",
+    
 )
 
-# Custom CSS for a polished look
+# Custom CSS 
 st.markdown(
     """
     <style>
@@ -271,6 +272,25 @@ st.markdown(
     '<div class="sub-header">Discover hidden structure in your data with clustering and dimensionality reduction.</div>',
     unsafe_allow_html=True,
 )
+st.expander(" About This APP ").markdown(
+    """
+    This app is designed to help you explore unsupervised machine learning techniques on your datasets. 
+    You can start with built-in sample datasets or upload your own CSV file. 
+    The app provides tools for preprocessing, clustering, dimensionality reduction, and evaluation, all in an interactive interface.
+    
+    **Getting Started:**
+    1. Choose a data source (sample dataset or upload your own).
+    2. Select features and preprocessing options.
+    3. Pick an algorithm and set hyperparameters.
+    4. Explore the results through various visualizations and metrics.
+    5. Download your clustered data for further analysis.
+    
+    Unsupervised learning can be a powerful way to find patterns and groupings in data without predefined labels. 
+    Use this app to experiment and gain insights from your data!
+    """,
+    unsafe_allow_html=True,
+)
+
 
 with st.sidebar:
     st.header("📁 1. Data Source")
