@@ -517,10 +517,11 @@ with st.sidebar:
 
 
 # MAIN AREA — TABS
-tab_overview, tab_explore, tab_model, tab_evaluate, tab_interpret, tab_export = st.tabs(
+tab_overview, tab_explore,tab_features, tab_model, tab_evaluate, tab_interpret, tab_export = st.tabs(
     [
         "📊 Overview",
         "🔍 Data Exploration",
+        "📊 Feature Analysis",
         "🧪 Train Model",
         "📈 Evaluate",
         "🎨 Interpret",
@@ -604,9 +605,282 @@ with tab_explore:
     )
     st.plotly_chart(fig, use_container_width=True)
 
+# TAB 3 - Feature analysis for better decision maing in model building 
+with tab_features:
+    st.subheader("Which features matter most?")
+    st.markdown(
+        "Unsupervised models don't have a 'target' to predict, so feature importance is measured differently than in supervised learning. "
+        "These four diagnostics help you decide which features to **keep**, **drop**, or **investigate further**."
+    )
+ 
+    feat_tabs = st.tabs([
+        "📏 Variance",
+        "🔗 Redundancy",
+        "🎯 Cluster discriminative power",
+        "📐 PCA loadings",
+    ])
+ 
+    # ---------------- 1. VARIANCE ----------------
+    with feat_tabs[0]:
+        st.markdown("#### Feature variance (after scaling)")
+        st.caption(
+            "Features with very low variance contain little information — they're nearly constant across all samples and "
+            "won't help distinguish clusters. Consider dropping any feature whose variance is much smaller than the others."
+        )
+        # Variance on the unscaled data is what matters before scaling normalizes everything
+        var_df = pd.DataFrame({
+            "feature": selected_features,
+            "raw_variance": X_raw.var().values,
+            "raw_std": X_raw.std().values,
+            "coef_of_variation": (X_raw.std() / X_raw.mean().abs().replace(0, np.nan)).values,
+        }).sort_values("raw_variance", ascending=False)
+ 
+        fig = px.bar(
+            var_df, x="feature", y="raw_variance",
+            color="raw_variance",
+            color_continuous_scale="Viridis",
+            height=400,
+            title="Raw variance per feature (before scaling)",
+        )
+        fig.update_layout(showlegend=False, coloraxis_showscale=False)
+        st.plotly_chart(fig, use_container_width=True)
+ 
+        st.dataframe(
+            var_df.style.format({
+                "raw_variance": "{:.3f}",
+                "raw_std": "{:.3f}",
+                "coef_of_variation": "{:.3f}",
+            }, na_rep="N/A").background_gradient(subset=["raw_variance"], cmap="Viridis"),
+            use_container_width=True,
+        )
+ 
+        # Auto-flag low-variance features
+        low_var_threshold = var_df["raw_variance"].max() * 0.01
+        low_var_feats = var_df[var_df["raw_variance"] < low_var_threshold]["feature"].tolist()
+        if low_var_feats:
+            st.warning(
+                f"⚠️ These features have very low variance and likely add no signal: **{', '.join(low_var_feats)}**. "
+                f"Consider removing them."
+            )
+        else:
+            st.success("✅ All selected features have meaningful variance.")
+ 
+    # ---------------- 2. REDUNDANCY ----------------
+    with feat_tabs[1]:
+        st.markdown("#### Feature redundancy (correlation analysis)")
+        st.caption(
+            "Highly correlated features carry the same signal twice and bias distance-based clustering toward whatever they measure. "
+            "If two features have |correlation| > 0.9, you can usually drop one without losing information."
+        )
+        corr = X_raw.corr().abs()
+        # Find pairs of highly correlated features (excluding self-correlations)
+        upper_tri = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
+        high_corr_pairs = (
+            upper_tri.stack()
+            .reset_index()
+            .rename(columns={"level_0": "feature_1", "level_1": "feature_2", 0: "abs_correlation"})
+            .sort_values("abs_correlation", ascending=False)
+        )
+ 
+        fig = px.imshow(
+            X_raw.corr(),
+            text_auto=".2f",
+            aspect="auto",
+            color_continuous_scale="RdBu_r",
+            zmin=-1, zmax=1,
+            title="Pearson correlation between features",
+        )
+        fig.update_layout(height=500)
+        st.plotly_chart(fig, use_container_width=True)
+ 
+        st.markdown("##### Most correlated pairs")
+        if len(high_corr_pairs) > 0:
+            top_pairs = high_corr_pairs.head(10)
+            st.dataframe(
+                top_pairs.style.format({"abs_correlation": "{:.3f}"})
+                .background_gradient(subset=["abs_correlation"], cmap="Reds"),
+                use_container_width=True,
+            )
+ 
+            redundant = high_corr_pairs[high_corr_pairs["abs_correlation"] > 0.9]
+            if len(redundant) > 0:
+                pairs_str = "; ".join([
+                    f"`{r.feature_1}` ↔ `{r.feature_2}` ({r.abs_correlation:.2f})"
+                    for r in redundant.head(5).itertuples()
+                ])
+                st.warning(
+                    f"⚠️ Highly correlated pairs (|r| > 0.9): {pairs_str}. "
+                    f"Each pair likely contains one redundant feature."
+                )
+            elif high_corr_pairs.iloc[0]["abs_correlation"] > 0.7:
+                st.info("ℹ️ Some moderate correlations exist but no severe redundancy. Probably fine.")
+            else:
+                st.success("✅ No problematic feature redundancy detected.")
+        else:
+            st.info("Need at least 2 features to compute correlations.")
+ 
+    # ---------------- 3. CLUSTER DISCRIMINATIVE POWER ----------------
+    with feat_tabs[2]:
+        st.markdown("#### Cluster discriminative power")
+        st.caption(
+            "**The closest thing to feature importance for clustering.** "
+            "Trains a quick K-Means and ranks features by how strongly their values differ across the discovered clusters. "
+            "Features at the top are doing most of the work in separating clusters."
+        )
+        st.markdown(
+            "**How it works:** Run K-Means with the chosen k, then for each feature compute the **F-statistic** "
+            "(ratio of between-cluster variance to within-cluster variance). Higher F = the feature differs sharply across clusters = more important."
+        )
+ 
+        disc_k = st.slider("Number of clusters to test with", 2, 10, 3, key="disc_k")
+        if st.button("Compute feature importance", key="disc_btn", type="primary"):
+            with st.spinner("Running K-Means and computing F-statistics..."):
+                km = KMeans(n_clusters=disc_k, n_init=10, random_state=42)
+                disc_labels = km.fit_predict(X_scaled)
+ 
+                rows = []
+                for feat in selected_features:
+                    groups = [X_raw.loc[disc_labels == c, feat].values for c in range(disc_k)]
+                    # Filter out empty groups (shouldn't happen with k-means but defensive)
+                    groups = [g for g in groups if len(g) > 0]
+                    try:
+                        f_stat, p_val = f_oneway(*groups)
+                    except Exception:
+                        f_stat, p_val = np.nan, np.nan
+                    # Also report how spread out the cluster means are (relative effect size)
+                    cluster_means = [g.mean() for g in groups]
+                    overall_mean = X_raw[feat].mean()
+                    overall_std = X_raw[feat].std()
+                    # Eta-squared (effect size): proportion of variance explained by clustering
+                    if overall_std > 0:
+                        between_var = np.mean([(m - overall_mean) ** 2 for m in cluster_means])
+                        eta_sq = between_var / X_raw[feat].var() if X_raw[feat].var() > 0 else 0
+                    else:
+                        eta_sq = 0
+                    rows.append({
+                        "feature": feat,
+                        "F_statistic": f_stat,
+                        "p_value": p_val,
+                        "eta_squared": eta_sq,
+                    })
+ 
+                disc_df = pd.DataFrame(rows).sort_values("F_statistic", ascending=False)
+ 
+            fig = px.bar(
+                disc_df, x="F_statistic", y="feature",
+                orientation="h",
+                color="F_statistic",
+                color_continuous_scale="Viridis",
+                height=max(300, 50 * len(selected_features)),
+                title=f"Feature importance — F-statistic across {disc_k} K-Means clusters",
+            )
+            fig.update_layout(yaxis={"categoryorder": "total ascending"}, coloraxis_showscale=False)
+            st.plotly_chart(fig, use_container_width=True)
+ 
+            # Format and color the table
+            disc_display = disc_df.copy()
+            disc_display["significant"] = disc_display["p_value"].apply(
+                lambda p: "✅" if p < 0.001 else ("✓" if p < 0.05 else "✗")
+            )
+            st.dataframe(
+                disc_display.style.format({
+                    "F_statistic": "{:.2f}",
+                    "p_value": "{:.2e}",
+                    "eta_squared": "{:.3f}",
+                }).background_gradient(subset=["F_statistic"], cmap="Viridis"),
+                use_container_width=True,
+            )
+            st.caption(
+                "**eta_squared** is the proportion of each feature's variance explained by cluster assignment "
+                "(0 = no separation, 1 = perfect separation). **significant**: ✅ p<0.001, ✓ p<0.05, ✗ not significant."
+            )
+ 
+            # Recommendations
+            top_3 = disc_df.head(3)["feature"].tolist()
+            bottom = disc_df[disc_df["F_statistic"] < 1.0]["feature"].tolist()
+ 
+            st.markdown("##### 💡 Recommendations")
+            st.markdown(
+                f"- **Top discriminating features:** `{'`, `'.join(top_3)}` — these are doing most of the clustering work."
+            )
+            if bottom:
+                st.markdown(
+                    f"- **Low-importance features (F < 1):** `{'`, `'.join(bottom)}` — "
+                    f"these barely vary across clusters. Consider removing them and re-running to see if clusters get cleaner."
+                )
+            else:
+                st.markdown("- **All features contribute meaningfully** to cluster separation.")
+ 
+    # ---------------- 4. PCA LOADINGS ----------------
+    with feat_tabs[3]:
+        st.markdown("#### Feature contribution to principal components")
+        st.caption(
+            "PCA finds the directions of maximum variance. The **loadings** tell you how much each original feature "
+            "contributes to each principal component — a way of asking 'which features drive the data's overall structure?'"
+        )
+        n_pcs = st.slider("Number of components to inspect", 2, min(5, len(selected_features)), min(3, len(selected_features)), key="pca_load_n")
+        if st.button("Compute PCA loadings", key="pca_load_btn", type="primary"):
+            pca_load = PCA(n_components=n_pcs)
+            pca_load.fit(X_scaled)
+            # components_ has shape (n_components, n_features) — each row is a PC
+            loadings = pd.DataFrame(
+                pca_load.components_.T,
+                index=selected_features,
+                columns=[f"PC{i+1}" for i in range(n_pcs)],
+            )
+ 
+            # Heatmap of loadings
+            fig = px.imshow(
+                loadings,
+                text_auto=".2f",
+                aspect="auto",
+                color_continuous_scale="RdBu_r",
+                zmin=-1, zmax=1,
+                title=f"PCA loadings — top {n_pcs} components",
+                labels=dict(x="Component", y="Feature", color="Loading"),
+            )
+            fig.update_layout(height=max(300, 40 * len(selected_features)))
+            st.plotly_chart(fig, use_container_width=True)
+ 
+            # Summed absolute loadings — overall feature importance to top PCs (weighted by variance explained)
+            evr = pca_load.explained_variance_ratio_
+            weighted_importance = (np.abs(loadings) * evr).sum(axis=1).sort_values(ascending=False)
+            imp_df = pd.DataFrame({
+                "feature": weighted_importance.index,
+                "weighted_importance": weighted_importance.values,
+            })
+ 
+            fig = px.bar(
+                imp_df, x="weighted_importance", y="feature",
+                orientation="h",
+                color="weighted_importance",
+                color_continuous_scale="Viridis",
+                height=max(300, 50 * len(selected_features)),
+                title="Weighted importance: |loading| × variance explained, summed across PCs",
+            )
+            fig.update_layout(yaxis={"categoryorder": "total ascending"}, coloraxis_showscale=False)
+            st.plotly_chart(fig, use_container_width=True)
+ 
+            st.caption(
+                f"Top {n_pcs} components explain **{evr.sum()*100:.1f}%** of total variance. "
+                f"Per component: " + ", ".join([f"PC{i+1} = {v*100:.1f}%" for i, v in enumerate(evr)])
+            )
+ 
+            # Top contributors per PC
+            st.markdown("##### Top contributing feature per component")
+            for i in range(n_pcs):
+                pc_col = f"PC{i+1}"
+                top_feat = loadings[pc_col].abs().idxmax()
+                top_val = loadings.loc[top_feat, pc_col]
+                direction = "positively" if top_val > 0 else "negatively"
+                st.markdown(
+                    f"- **{pc_col}** ({evr[i]*100:.1f}% of variance): "
+                    f"most influenced by `{top_feat}` (loading = {top_val:.2f}, contributes {direction})"
+                )
 
 
-# TAB 3 — TRAIN MODEL
+
+# TAB 4 — TRAIN MODEL
 
 with tab_model:
     st.subheader(f"Run: {algorithm}")
@@ -829,7 +1103,7 @@ with tab_model:
 
 
 
-# TAB 4 — EVALUATE
+# TAB 5 — EVALUATE
 
 with tab_evaluate:
     st.subheader("Diagnostic plots & model selection tools")
@@ -946,7 +1220,7 @@ with tab_evaluate:
         dend_link = st.selectbox("Linkage", ["ward", "complete", "average", "single"], key="dend_link")
         truncate_at = st.slider("Show last N merges", 5, 50, 30, key="dend_trunc")
         suggest_k = st.slider("Show suggested cut for k =", 2, 10, 3, key="dend_k")
-        
+
         if st.button("Plot dendrogram", key="dend_btn"):
             n_for_dendro = min(500, len(X_scaled))
             if len(X_scaled) > 500:
@@ -1040,7 +1314,7 @@ with tab_evaluate:
 
 
 
-# TAB 5 — INTERPRET
+# TAB 6 — INTERPRET
 
 with tab_interpret:
     st.subheader("Make sense of the clusters")
@@ -1153,7 +1427,7 @@ with tab_interpret:
 
 
 
-# TAB 6 — EXPORT
+# TAB 7 — EXPORT
 with tab_export:
     st.subheader("Download your results")
 
