@@ -272,7 +272,7 @@ st.markdown(
     '<div class="sub-header">Discover hidden structure in your data with clustering and dimensionality reduction.</div>',
     unsafe_allow_html=True,
 )
-st.expander(" About This APP ").markdown(
+st.expander(" 📲 About This App! ").markdown(
     """
     This app is designed to help you explore unsupervised machine learning techniques on your datasets. 
     You can start with built-in sample datasets or upload your own CSV file. 
