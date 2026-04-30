@@ -68,7 +68,7 @@ This machine learning project, is an application created using streamlit, focuse
   
   <tr>
     <td width="27%">
-      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Final_portfolio/images1/Screenshot%202026-04-29%20at%2020.16.04.png" alt="Unsupervised machine learning" width="70%">
+      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Final_portfolio/images1/Screenshot%202026-04-29%20at%2020.16.04.png" alt="Unsupervised machine learning" width="100%">
     </td>
     <td width="55%" valign="top">
 
