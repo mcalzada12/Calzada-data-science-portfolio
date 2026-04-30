@@ -8,7 +8,7 @@ An interactive Streamlit app that turns unsupervised machine learning into an ex
 ![Python](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![Streamlit](https://img.shields.io/badge/streamlit-1.30+-red.svg)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3+-orange.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+
  
 ---
  
