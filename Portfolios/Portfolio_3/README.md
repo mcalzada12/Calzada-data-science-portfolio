@@ -1,4 +1,5 @@
 # 📊 Supervised Machine Learning Explorer
+[The App!](https://mcalzada12-calzada--portfoliosportfolio-3mlsstreamlitapp-lrta5k.streamlit.app/)
 
 ## 🚀 Project Overview
 
@@ -9,10 +10,6 @@ With this app, users can upload their own dataset or select from built-in datase
 This project is designed to make machine learning more understandable by combining data exploration, model training, evaluation, and visualization into a single interface. It provides a hands-on experience where users can experiment and immediately see results.
 
 ---
-
-## Deployed App
-
-
 
 ## Required Libraries and Versions
 
