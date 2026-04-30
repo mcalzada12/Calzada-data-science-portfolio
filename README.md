@@ -1,4 +1,4 @@
-# Calzada-data-science-portfolio
+# Calzada-data-science-portfolio 
 This repository is my main Data Science Portfolio. It will be used to organize and document all my data science work, including exploratory data analysis (EDA), visualizations, and basic modeling. The goal of this portfolio is to track my progress and build a structured collection of projects.
 
 
@@ -72,7 +72,7 @@ This machine learning project, is an application created using streamlit, focuse
     </td>
     <td width="55%" valign="top">
 
-[Unsupervised Machine Learning Model](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Final_portfolio/MLunsupervised_app.py)
+[Unsupervised Machine Learning Model](https://github.com/mcalzada12/Calzada-data-science-portfolio/tree/main/Portfolios/Final_portfolio)
 
 
 This Streamlit project gives the opportunity to the user to explore the wide variety of unsupervised machine learning models. Through the app there are sevearl interactive features that let the user modify and "twitch" different parameters in order to test different models and see their results. The app also lets user input their own data as well as choose which of the features to use in the model. This option is accompanied by the help of the feature tab that will helpguide the user in a better decision making over which feature are the best for predicting the true values. 
