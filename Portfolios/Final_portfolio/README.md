@@ -40,8 +40,7 @@ Most ML demos throw a single algorithm at you and call it done. This app is diff
 …or upload your own CSV.
  
 ### Diagnostic suite
-- 📉 **Elbow method** with both inertia and silhouette curves
-- 🌟 **Silhouette analysis** with full per-sample plots
+- 📉 **Elbow method and Silhuette Test** with both inertia and silhouette curves
 - 🌳 **Interactive dendrogram** with adjustable cut lines and auto-interpretation
 - 🎯 **Method comparison scoreboard** — run all variants side-by-side
 - Three quality metrics: **Silhouette**, **Calinski-Harabasz**, **Davies-Bouldin**
@@ -128,7 +127,6 @@ This app is designed to demystify unsupervised learning. By the time you've expl
 - The difference between `k-means++` and `random` initialization (and why one is the default)
 - How **linkage methods** (ward, complete, average, single) shape hierarchical clusters
 - How to read a **dendrogram** and pick a cut height
-- What a **silhouette score** actually measures (and when it lies)
 - Why **PCA before clustering** can dramatically improve results
 - How to measure **feature importance** when there's no target label
 ---
