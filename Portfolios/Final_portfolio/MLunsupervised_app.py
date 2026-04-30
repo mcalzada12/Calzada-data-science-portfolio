@@ -1138,7 +1138,7 @@ with tab_evaluate:
     st.subheader("Diagnostic plots & model selection tools")
     st.write("These plots help you choose good hyperparameters — they run independently of the main model.")
 
-    diag_tabs = st.tabs(["📉 Elbow method", "🌟 Silhouette analysis", "🌳 Dendrogram", "🎯 Method comparison"])
+    diag_tabs = st.tabs(["📉 Elbow method", "🌳 Dendrogram", "🎯 Method comparison"])
 
     # --- Elbow method
     with diag_tabs[0]:
@@ -1183,7 +1183,6 @@ with tab_evaluate:
             best_k = ks[int(np.nanargmax(silhouettes))]
             st.success(f"💡 Suggested k by silhouette: **{best_k}** (silhouette = {silhouettes[ks.index(best_k)]:.3f})")
 
- 
 
     # --- Dendrogram
     with diag_tabs[2]:
