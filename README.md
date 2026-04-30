@@ -51,7 +51,7 @@ The project focuses on the idea of tidy data preparation, and the process requir
   </tr>
   <tr>
   <td width="40%">
-    <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/Screenshot%202026-04-09%20at%2019.55.08.png" alt="Machine learning App" width="80%">
+    <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Portfolio_3/images/Screenshot%202026-04-09%20at%2019.55.08.png" alt="Machine learning App" width="100%">
   </td>
   <td width="50%" valign="top">
 
