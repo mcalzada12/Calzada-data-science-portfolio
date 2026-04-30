@@ -1183,42 +1183,7 @@ with tab_evaluate:
             best_k = ks[int(np.nanargmax(silhouettes))]
             st.success(f"💡 Suggested k by silhouette: **{best_k}** (silhouette = {silhouettes[ks.index(best_k)]:.3f})")
 
-    # --- Silhouette analysis
-    with diag_tabs[1]:
-        st.markdown("#### Silhouette plot")
-        st.caption("Each bar represents a sample. Wider clusters = more cohesive. Negative values = misclassified samples.")
-        sil_k = st.slider("Number of clusters", 2, 12, 3, key="sil_k")
-        if st.button("Run silhouette analysis", key="sil_btn"):
-            km = KMeans(n_clusters=sil_k, n_init=10, random_state=42)
-            sil_labels = km.fit_predict(X_scaled)
-            sil_avg = silhouette_score(X_scaled, sil_labels)
-            sample_sil = silhouette_samples(X_scaled, sil_labels)
-
-            fig, ax = plt.subplots(figsize=(10, 6))
-            y_lower = 10
-            cmap = plt.cm.get_cmap("Spectral")
-            for i in range(sil_k):
-                cluster_sil = sample_sil[sil_labels == i]
-                cluster_sil.sort()
-                size = cluster_sil.shape[0]
-                y_upper = y_lower + size
-                color = cmap(i / sil_k)
-                ax.fill_betweenx(np.arange(y_lower, y_upper), 0, cluster_sil, facecolor=color, alpha=0.7)
-                ax.text(-0.05, y_lower + 0.5 * size, str(i))
-                y_lower = y_upper + 10
-            ax.axvline(x=sil_avg, color="red", linestyle="--", label=f"avg = {sil_avg:.3f}")
-            ax.set_xlabel("Silhouette coefficient")
-            ax.set_ylabel("Cluster")
-            ax.set_title(f"Silhouette plot for k={sil_k}")
-            ax.legend()
-            ax.set_yticks([])
-            st.pyplot(fig)
-            plt.close(fig)
-            st.info(f"Average silhouette score: **{sil_avg:.3f}**", )
-            st.markdown("##### Interpretation of silhouette scores:")
-            flexible_callout(" Near +1 (e.g., > 0.7): Strong structure; points are well-clustered and distinct. ", container=st, background_color="#C3EE5F",font_size=11)
-            flexible_callout(" Around 0: Weak structure; clusters may be overlapping or not well-defined. ", container=st, background_color="#F6F89D",font_size=11)
-            flexible_callout(" Below 0 (e.g., < 0): Poor structure; many points may be misclassified, or clusters are not meaningful. ", container=st, background_color="#DB7C88",font_size=11)
+ 
 
     # --- Dendrogram
     with diag_tabs[2]:
