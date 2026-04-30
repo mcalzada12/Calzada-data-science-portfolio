@@ -61,9 +61,25 @@ This machine learning project, is an application created using streamlit, focuse
 
 
 
-**Tools & Technologies:** Python, Pandas, sklearn, Machine learning models and Functions 
+**Tools & Technologies:** Python, Pandas, sklearn, Streamlit, Machine learning models and Functions 
 
   </td>
   </tr>
+  
+  <tr>
+    <td width="27%">
+      <img src="https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Final_portfolio/images1/Screenshot%202026-04-29%20at%2020.16.04.png" alt="Unsupervised machine learning" width="70%">
+    </td>
+    <td width="55%" valign="top">
+
+[Unsupervised Machine Learning Model](https://github.com/mcalzada12/Calzada-data-science-portfolio/blob/main/Portfolios/Final_portfolio/MLunsupervised_app.py)
+
+
+This Streamlit project gives the opportunity to the user to explore the wide variety of unsupervised machine learning models. Through the app there are sevearl interactive features that let the user modify and "twitch" different parameters in order to test different models and see their results. The app also lets user input their own data as well as choose which of the features to use in the model. This option is accompanied by the help of the feature tab that will helpguide the user in a better decision making over which feature are the best for predicting the true values. 
+
+**Tools & Technologies:** Python, Pandas, Streamlit, Matplotlib, Seaborn, Unsupervised Machine learning models. 
+
+<tr>
+  
 </table>
 
