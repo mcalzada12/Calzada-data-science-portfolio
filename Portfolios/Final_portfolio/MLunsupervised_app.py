@@ -1185,7 +1185,7 @@ with tab_evaluate:
 
 
     # --- Dendrogram
-    with diag_tabs[2]:
+    with diag_tabs[1]:
         st.markdown("#### Hierarchical clustering dendrogram")
         st.caption("The y-axis shows merge distances. Cut horizontally to choose number of clusters.")
         with st.expander("📖 How to read a dendrogram", expanded=False):
@@ -1260,7 +1260,7 @@ with tab_evaluate:
             plt.close(fig)
 
     # --- Method comparison
-    with diag_tabs[3]:
+    with diag_tabs[2]:
         st.markdown("#### Compare clustering methods")
         st.caption("Side-by-side scoreboard of clustering variants on the current data.")
         cmp_k = st.slider("Number of clusters (k)", 2, 10, 3, key="cmp_k")
