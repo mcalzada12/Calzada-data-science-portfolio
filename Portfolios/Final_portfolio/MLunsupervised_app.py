@@ -993,7 +993,7 @@ with tab_model:
         st.markdown("### 📊 Results")
         st.expander("Result Explanations").markdown(
              """ **Silhuette Score:** 
-             > *Measures how similar an object is to its own cluster compared to other clusters. Range: [-1, 1].*
+             *Measures how similar an object is to its own cluster compared to other clusters. Range: [-1, 1].*
 
             1. Higher is better. Values near +1 indicate that the sample is far from the neighboring clusters
             2. Values near 0 indicate that the sample is on or very close to the decision boundary between two neighboring clusters. 
@@ -1008,7 +1008,7 @@ with tab_model:
             > *Average similarity between each cluster and its most similar one, where similarity is the ratio of within-cluster distances to between-cluster distances. Lower is better.*
             1. Lower values indicate better clustering (well-separated, compact clusters).
             2. Values > 1 often indicate overlapping clusters, while values close to 0 indicate very distinct clusters.
-            
+
 
              """
         )
