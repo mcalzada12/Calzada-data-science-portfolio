@@ -993,9 +993,7 @@ with tab_model:
         st.markdown("### 📊 Results")
         st.expander("Result Explanations").markdown(
              """ **Silhuette Score:** 
-             *Measures how similar an object is to its own cluster compared to other clusters. Range: [-1, 1].*
-
-             
+             Measures how similar an object is to its own cluster compared to other clusters. Range: [-1, 1].
                1. Higher is better. Values near +1 indicate that the sample is far from the neighboring clusters
                2. Values near 0 indicate that the sample is on or very close to the decision boundary between two neighboring clusters. 
                3. Negative values indicate that those samples might have been assigned to the wrong cluster.
